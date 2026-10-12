@@ -97,7 +97,14 @@ project = "Smarter Documentation"
 # pylint: disable=redefined-builtin
 copyright = f"2023 - {datetime.now().year}"
 author = AUTHOR
-release = subprocess.check_output(["git", "describe", "--tags", "--abbrev=0"], text=True).strip()
+try:
+    release = subprocess.check_output(
+        ["git", "describe", "--tags", "--abbrev=0"],
+        text=True,
+        stderr=subprocess.DEVNULL,
+    ).strip()
+except subprocess.CalledProcessError:
+    release = "development"
 
 
 try:
